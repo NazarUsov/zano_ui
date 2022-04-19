@@ -25,11 +25,13 @@
   src: url(~src/assets/fonts/SF-Pro-Rounded-Regular.ttf);
   font-weight: 400;
 }
+
 @font-face {
   font-family: SF-Pro-Rounded;
   src: url(~src/assets/fonts/SF-Pro-Rounded-Medium.ttf);
   font-weight: 500;
 }
+
 @font-face {
   font-family: SF-Pro-Rounded;
   src: url(~src/assets/fonts/SF-Pro-Rounded-Semibold.ttf);
@@ -49,13 +51,18 @@ body {
   width: 100vw;
   height: 100vh;
   background: #0c0c3a;
+
+  min-width: 1300px;
+
   i {
     display: inline-block;
+
     svg {
       width: 100%;
       height: 100%;
     }
   }
+
   app-root {
     display: flex;
     width: 100%;

@@ -1,21 +1,19 @@
-import { Component, OnInit, NgZone, Renderer2, OnDestroy, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
-import { BackendService } from './_helpers/services/backend.service';
-import { Router } from '@angular/router';
-import { VariablesService } from './_helpers/services/variables.service';
-import { ContextMenuComponent } from 'ngx-contextmenu';
-import { IntToMoneyPipe } from './_helpers/pipes/int-to-money.pipe';
-import { BigNumber } from 'bignumber.js';
-import { ModalService } from './_helpers/services/modal.service';
-import { UtilsService } from './_helpers/services/utils.service';
-import { Store } from 'store';
+import {Component, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateService} from '@ngx-translate/core';
+import {BackendService} from './_helpers/services/backend.service';
+import {Router} from '@angular/router';
+import {VariablesService} from './_helpers/services/variables.service';
+import {ContextMenuComponent} from 'ngx-contextmenu';
+import {IntToMoneyPipe} from './_helpers/pipes/int-to-money.pipe';
+import {BigNumber} from 'bignumber.js';
+import {ModalService} from './_helpers/services/modal.service';
+import {Store} from 'store';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [UtilsService]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -41,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private intToMoneyPipe: IntToMoneyPipe,
     private modalService: ModalService,
-    private utilsService: UtilsService,
     private store: Store
   ) {
     translate.addLangs(['en', 'fr', 'de', 'it', 'pt']);
@@ -173,7 +170,6 @@ export class AppComponent implements OnInit, OnDestroy {
       });
 
 
-
       this.backend.eventSubscribe('update_daemon_state', (data) => {
         console.log('----------------- update_daemon_state -----------------');
         console.log('DAEMON:' + data.daemon_network_state);
@@ -302,19 +298,23 @@ export class AppComponent implements OnInit, OnDestroy {
               } else if (contract.state === 5 && contract.cancel_expiration_time < exp_med_ts) {
                 contract.state = 130;
               } else if (contract.state === 1) {
-                const searchResult2 = this.variablesService.settings.notViewedContracts.find(elem => elem.state === 110 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id);
+                const searchResult2 = this.variablesService.settings.notViewedContracts.find(elem => {
+                  return elem.state === 110 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id;
+                });
                 if (searchResult2) {
                   if (searchResult2.time === contract.expiration_time) {
                     contract.state = 110;
                   } else {
                     for (let j = 0; j < this.variablesService.settings.notViewedContracts.length; j++) {
-                      if (this.variablesService.settings.notViewedContracts[j].contract_id === contract.contract_id && this.variablesService.settings.notViewedContracts[j].is_a === contract.is_a) {
+                      if (this.variablesService.settings.notViewedContracts[j].contract_id === contract.contract_id &&
+                        this.variablesService.settings.notViewedContracts[j].is_a === contract.is_a) {
                         this.variablesService.settings.notViewedContracts.splice(j, 1);
                         break;
                       }
                     }
                     for (let j = 0; j < this.variablesService.settings.viewedContracts.length; j++) {
-                      if (this.variablesService.settings.viewedContracts[j].contract_id === contract.contract_id && this.variablesService.settings.viewedContracts[j].is_a === contract.is_a) {
+                      if (this.variablesService.settings.viewedContracts[j].contract_id === contract.contract_id &&
+                        this.variablesService.settings.viewedContracts[j].is_a === contract.is_a) {
                         this.variablesService.settings.viewedContracts.splice(j, 1);
                         break;
                       }
@@ -324,24 +324,30 @@ export class AppComponent implements OnInit, OnDestroy {
               } else if (contract.state === 2 && (contract.height === 0 || (height_app - contract.height) < 10)) {
                 contract.state = 201;
               } else if (contract.state === 2) {
-                const searchResult3 = this.variablesService.settings.viewedContracts.some(elem => elem.state === 120 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id);
+                const searchResult3 = this.variablesService.settings.viewedContracts.some(elem => {
+                  return elem.state === 120 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id;
+                });
                 if (searchResult3) {
                   contract.state = 120;
                 }
               } else if (contract.state === 5) {
-                const searchResult4 = this.variablesService.settings.notViewedContracts.find(elem => elem.state === 130 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id);
+                const searchResult4 = this.variablesService.settings.notViewedContracts.find(elem => {
+                  return elem.state === 130 && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id;
+                });
                 if (searchResult4) {
                   if (searchResult4.time === contract.cancel_expiration_time) {
                     contract.state = 130;
                   } else {
                     for (let j = 0; j < this.variablesService.settings.notViewedContracts.length; j++) {
-                      if (this.variablesService.settings.notViewedContracts[j].contract_id === contract.contract_id && this.variablesService.settings.notViewedContracts[j].is_a === contract.is_a) {
+                      if (this.variablesService.settings.notViewedContracts[j].contract_id === contract.contract_id &&
+                        this.variablesService.settings.notViewedContracts[j].is_a === contract.is_a) {
                         this.variablesService.settings.notViewedContracts.splice(j, 1);
                         break;
                       }
                     }
                     for (let j = 0; j < this.variablesService.settings.viewedContracts.length; j++) {
-                      if (this.variablesService.settings.viewedContracts[j].contract_id === contract.contract_id && this.variablesService.settings.viewedContracts[j].is_a === contract.is_a) {
+                      if (this.variablesService.settings.viewedContracts[j].contract_id === contract.contract_id &&
+                        this.variablesService.settings.viewedContracts[j].is_a === contract.is_a) {
                         this.variablesService.settings.viewedContracts.splice(j, 1);
                         break;
                       }
@@ -352,7 +358,9 @@ export class AppComponent implements OnInit, OnDestroy {
                 contract.state = 601;
               }
 
-              const searchResult = this.variablesService.settings.viewedContracts.some(elem => elem.state === contract.state && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id);
+              const searchResult = this.variablesService.settings.viewedContracts.some(elem => {
+                return elem.state === contract.state && elem.is_a === contract.is_a && elem.contract_id === contract.contract_id;
+              });
               contract.is_new = !searchResult;
 
               let findContract = false;
@@ -381,7 +389,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('----------------- handle_deeplink_click -----------------');
         console.log(data);
         if (data) {
-          this.variablesService.deeplink$.next(data)
+          this.variablesService.deeplink$.next(data);
         }
       });
 
@@ -400,7 +408,8 @@ export class AppComponent implements OnInit, OnDestroy {
         if (wallet) {
           if (tr_info.hasOwnProperty('contract')) {
             for (let i = 0; i < wallet.contracts.length; i++) {
-              if (wallet.contracts[i].contract_id === tr_info.contract[0].contract_id && wallet.contracts[i].is_a === tr_info.contract[0].is_a) {
+              if (wallet.contracts[i].contract_id === tr_info.contract[0].contract_id &&
+                wallet.contracts[i].is_a === tr_info.contract[0].is_a) {
                 if (wallet.contracts[i].state === 1 || wallet.contracts[i].state === 110) {
                   wallet.contracts[i].is_new = true;
                   wallet.contracts[i].state = 140;
@@ -553,16 +562,11 @@ export class AppComponent implements OnInit, OnDestroy {
               this.variablesService.settings[key] = data[key];
             }
           }
-          if (this.variablesService.settings.hasOwnProperty('scale') && [6, 8, 10, 12].indexOf(this.variablesService.settings.scale) !== -1) {
-            const width = this.utilsService.getMinWidthByScale(this.variablesService.settings.scale);
-            const app = document.documentElement.querySelector('app-root');
-            this.renderer.setStyle(app, 'min-width', width + 'px');
+          if (this.variablesService.settings.hasOwnProperty('scale') &&
+            [6, 8, 10, 12].indexOf(this.variablesService.settings.scale) !== -1) {
             this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale + 'px');
           } else {
-            this.variablesService.settings.scale = 8
-            const width = this.utilsService.getMinWidthByScale(this.variablesService.settings.scale);
-            const app = document.documentElement.querySelector('app-root');
-            this.renderer.setStyle(app, 'min-width', width + 'px');
+            this.variablesService.settings.scale = 8;
             this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale + 'px');
           }
         }
@@ -575,7 +579,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.backend.haveSecureAppData((statusPass) => {
             if (statusPass) {
               this.ngZone.run(() => {
-                this.router.navigate(['/login'], { queryParams: { type: 'auth' } });
+                this.router.navigate(['/login'], {queryParams: {type: 'auth'}});
               });
             } else {
               if (Object.keys(data).length !== 0) {
@@ -586,7 +590,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 });
               } else {
                 this.ngZone.run(() => {
-                  this.router.navigate(['/login'], { queryParams: { type: 'reg' } });
+                  this.router.navigate(['/login'], {queryParams: {type: 'reg'}});
                 });
               }
             }
@@ -609,7 +613,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.http.get('https://api.coingecko.com/api/v3/simple/price?ids=zano&vs_currencies=usd&include_24hr_change=true').subscribe(
           data => {
             this.variablesService.moneyEquivalent = data['zano']['usd'];
-            this.variablesService.moneyEquivalentPercent = data['zano']["usd_24h_change"];
+            this.variablesService.moneyEquivalentPercent = data['zano']['usd_24h_change'];
           },
           error => {
             console.warn('api.coingecko.com price error: ', error);
@@ -622,7 +626,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.getMoneyEquivalent();
         }, 30000);
       }
-    )
+    );
   }
 
   getAliases() {
@@ -731,18 +735,18 @@ export class AppComponent implements OnInit, OnDestroy {
       if (sync && sync.length) {
         const result = value.map(item => {
           if (item.wallet_id === wallet.wallet_id) {
-            return { sync: boolean, wallet_id: wallet.wallet_id };
+            return {sync: boolean, wallet_id: wallet.wallet_id};
           } else {
             return item;
           }
         });
         this.store.set('sync', result);
       } else {
-        value.push({ sync: boolean, wallet_id: wallet.wallet_id });
+        value.push({sync: boolean, wallet_id: wallet.wallet_id});
         this.store.set('sync', value);
       }
     } else {
-      this.store.set('sync', [{ sync: boolean, wallet_id: wallet.wallet_id }]);
+      this.store.set('sync', [{sync: boolean, wallet_id: wallet.wallet_id}]);
     }
   }
 

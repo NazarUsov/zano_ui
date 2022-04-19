@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
   ifSaved = false;
   scale: number;
   changeForm: any;
-  public correntNotificationsState;
+  currentNotificationsState;
   languagesOptions = [
     {
       name: 'en',
@@ -99,7 +99,6 @@ export class SettingsComponent implements OnInit {
       id: 4
     }
   ];
-
   currentBuild = '';
   appPass: any;
 
@@ -140,7 +139,7 @@ export class SettingsComponent implements OnInit {
       });
     });
     this.backend.getIsDisabledNotifications((res) => {
-      this.correntNotificationsState = res;
+      this.currentNotificationsState = res;
     });
   }
 
@@ -179,12 +178,12 @@ export class SettingsComponent implements OnInit {
   }
 
   toggleNotifications() {
-    if (!this.correntNotificationsState) {
+    if (!this.currentNotificationsState) {
       this.backend.setIsDisabledNotifications('true');
-      this.correntNotificationsState = true;
+      this.currentNotificationsState = true;
     } else {
       this.backend.setIsDisabledNotifications('false');
-      this.correntNotificationsState = false;
+      this.currentNotificationsState = false;
     }
   }
 
