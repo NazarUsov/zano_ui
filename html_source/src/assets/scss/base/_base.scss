@@ -9,7 +9,7 @@
 button {
   transition: all 0.25s ease;
   border: none;
-  font-family: SF-Pro-Rounded, sans-serif;
+  //font-family: SF-Pro-Rounded, sans-serif;
   outline: none;
   background: none;
   &.blue-button {
@@ -123,7 +123,7 @@ button {
       }
       font-size: 2rem;
       line-height: 2.4rem;
-      font-family: SF-Pro-Rounded, sans-serif;
+      //font-family: SF-Pro-Rounded, sans-serif;
       border: none;
       outline: none;
       padding: 1rem;
@@ -158,7 +158,12 @@ input[type="radio"].style-radio {
     font-weight: 400;
     padding-left: 2.4rem;
     color: $optionalTextColor;
-    @include unSelect;
+    -webkit-touch-collout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   &:not(checked) {
     position: absolute;
@@ -204,7 +209,12 @@ input[type="checkbox"].style-checkbox {
     font-weight: 400;
     padding-left: 3.6rem;
     color: $mainTextColor;
-    @include unSelect;
+    -webkit-touch-collout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   &:not(checked) {
     position: absolute;
@@ -553,7 +563,7 @@ input[type="checkbox"].style-checkbox {
   }
   li {
     display: block;
-    font-family: SF-Pro-Rounded, sans-serif;
+    //font-family: SF-Pro-Rounded, sans-serif;
     font-size: 1.3rem;
     text-transform: uppercase;
     text-align: center;

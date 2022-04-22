@@ -47,7 +47,7 @@ export class VariablesService {
   public settings = {
     appLockTime: 15,
     appLog: 0,
-    scale: 8,
+    scale: '10px',
     language: 'en',
     default_path: '/',
     viewedContracts: [],

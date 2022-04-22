@@ -1,6 +1,6 @@
+// TODO delete not needed styles
 // BASE
-@import "assets/scss/base/mixins";
-@import "assets/scss/base/null";
+@import "assets/scss/base/reset";
 @import "assets/scss/base/variables";
 @import "assets/scss/base/base";
 
@@ -40,19 +40,14 @@
 
 html {
   font-family: SF-Pro-Rounded, sans-serif;
-  font-size: 8px;
 }
 
 body {
-  font-family: SF-Pro-Rounded, sans-serif;
   font-weight: 400;
-  font-size: 2rem;
-  line-height: 2.4rem;
   width: 100vw;
+  min-width: 1300px;
   height: 100vh;
   background: #0c0c3a;
-
-  min-width: 1300px;
 
   i {
     display: inline-block;

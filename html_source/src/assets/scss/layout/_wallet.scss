@@ -146,7 +146,9 @@ app-typing-message {
         &.my {
           background-color: $messageMyBackgroundColor;
           &:before {
-            @include pseudo;
+            content: '';
+            display: block;
+            position: absolute;
             top: 0;
             left: -1.1rem;
             border: 1.2rem solid transparent;
@@ -156,7 +158,9 @@ app-typing-message {
         &.buddy {
           background-color: $messageBuddyBackgroundColor;
           &:after {
-            @include pseudo;
+            content: '';
+            display: block;
+            position: absolute;
             right: -1.1rem;
             top: 0;
             border: 1.2rem solid transparent;

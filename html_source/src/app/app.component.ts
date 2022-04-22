@@ -563,11 +563,11 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           }
           if (this.variablesService.settings.hasOwnProperty('scale') &&
-            [6, 8, 10, 12].indexOf(this.variablesService.settings.scale) !== -1) {
-            this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale + 'px');
+            ['8px', '10px', '12px', 'px'].indexOf(this.variablesService.settings.scale) !== -1) {
+            this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale);
           } else {
-            this.variablesService.settings.scale = 8;
-            this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale + 'px');
+            this.variablesService.settings.scale = '10px';
+            this.renderer.setStyle(document.documentElement, 'font-size', this.variablesService.settings.scale);
           }
         }
         this.translate.use(this.variablesService.settings.language);
