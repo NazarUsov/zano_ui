@@ -1,5 +1,4 @@
-import { Directive, Input, Output, ElementRef, HostListener, Renderer2, HostBinding, OnDestroy, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, Output, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[tooltip]'
@@ -63,11 +62,9 @@ export class TooltipDirective implements OnDestroy {
     this.removeTooltipTimeout = setTimeout(() => {
       this.renderer.setStyle(this.tooltip, 'opacity', '0');
       this.removeTooltipTimeoutInner = setTimeout(() => {
-        if (this.renderer && this.tooltip) {
-          this.renderer.removeChild(document.body, this.tooltip);
-          this.tooltip.removeEventListener('mouseenter', this.enter);
-          this.tooltip.removeEventListener('mouseleave', this.leave);
-        }
+        this.renderer.removeChild(document.body, this.tooltip);
+        this.tooltip.removeEventListener('mouseenter', this.enter);
+        this.tooltip.removeEventListener('mouseleave', this.leave);
         this.tooltip = null;
         this.onHide.emit(true);
       }, this.delay);
@@ -113,10 +110,10 @@ export class TooltipDirective implements OnDestroy {
       }
     }
     this.renderer.setStyle(this.tooltip, 'opacity', '0');
-    this.renderer.setStyle(this.tooltip, '-webkit-transition', `opacity ${this.delay}ms`);
-    this.renderer.setStyle(this.tooltip, '-moz-transition', `opacity ${this.delay}ms`);
-    this.renderer.setStyle(this.tooltip, '-o-transition', `opacity ${this.delay}ms`);
-    this.renderer.setStyle(this.tooltip, 'transition', `opacity ${this.delay}ms`);
+    this.renderer.setStyle(this.tooltip, '-webkit-transition', `opacity ${ this.delay }ms`);
+    this.renderer.setStyle(this.tooltip, '-moz-transition', `opacity ${ this.delay }ms`);
+    this.renderer.setStyle(this.tooltip, '-o-transition', `opacity ${ this.delay }ms`);
+    this.renderer.setStyle(this.tooltip, 'transition', `opacity ${ this.delay }ms`);
     window.setTimeout(() => {
       this.renderer.setStyle(this.tooltip, 'opacity', '1');
     }, 0);
@@ -235,10 +232,8 @@ export class TooltipDirective implements OnDestroy {
     clearTimeout(this.removeTooltipTimeout);
     clearTimeout(this.removeTooltipTimeoutInner);
     clearTimeout(this.removeTooltipTimeDelay);
-    if (this.tooltip && this.renderer) {
-      this.renderer.removeChild(document.body, this.tooltip);
-      this.tooltip = null;
-    }
+    this.renderer.removeChild(document.body, this.tooltip);
+    this.tooltip = null;
   }
 
 }
