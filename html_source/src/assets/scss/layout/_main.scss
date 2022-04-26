@@ -15,7 +15,7 @@ app-login {
     position: relative;
     padding: 3rem;
     min-height: 100%;
-    color: $mainTextColor;
+    color: var(--mainTextColor);
     .head {
       position: relative;
       top: 0;
@@ -27,7 +27,7 @@ app-main {
   .content {
     .add-wallet {
       .add-wallet-help {
-        color: $blueTextColor;
+        color: var(--blueTextColor);
       }
     }
   }

@@ -1,0 +1,18 @@
+app-transaction-details {
+  .table {
+    font-weight: 500;
+    .row {
+      .cell {
+        &.label {
+          color: var(--mainTextColor);
+        }
+        &.value {
+          color: var(--mainTextColor);
+        }
+        &.key-value {
+          color: var(--blueTextColor);
+        }
+      }
+    }
+  }
+}

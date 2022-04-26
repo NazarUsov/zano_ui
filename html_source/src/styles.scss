@@ -1,12 +1,13 @@
-// TODO delete not needed styles
 // BASE
 @import "assets/scss/base/reset";
-@import "assets/scss/base/variables";
+@import "assets/scss/base/colors";
+// TODO delete not needed styles
 @import "assets/scss/base/base";
 
 // HELPERS
 @import "assets/scss/helpers/helpers";
 
+// TODO delete not needed styles
 // LAYOUT
 @import "assets/scss/layout/main";
 @import "assets/scss/layout/settings";
@@ -16,6 +17,9 @@
 @import "assets/scss/layout/contact";
 @import "assets/scss/layout/seed-phrase";
 @import "assets/scss/layout/loader";
+
+// COMPONENTS
+@import "assets/scss/components/index";
 
 // MODULES
 @import "assets/scss/modules/head";

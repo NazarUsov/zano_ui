@@ -1,4 +1,4 @@
-@import "../../assets/scss/base/variables";
+@import "../../assets/scss/base/colors";
 :host {
   display: flex;
   flex-direction: column;
@@ -73,15 +73,15 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 .cdk-drag-preview.sidebar-account {
-  color: $accountMainTextColor;
-  background: $accountActiveBackgroundColor;
-  box-shadow: $accountDragBoxShadow;
+  color: var(--accountMainTextColor);
+  background: var(--accountActiveBackgroundColor);
+  box-shadow: var(--accountDragBoxShadow);
   &.account-price {
     .price {
-      color: $tooltipTextColor;
+      color: var(--tooltipTextColor);
     }
     .price-percent {
-      color: $greenTextColor;
+      color: var(--greenTextColor);
     }
   }
 }

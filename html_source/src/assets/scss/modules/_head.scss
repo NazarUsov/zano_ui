@@ -6,7 +6,7 @@
   width: 100%;
   height: 3rem;
   .breadcrumbs {
-    color: $blueTextColor;
+    color: var(--blueTextColor);
     > span,
     a {
       &:not(:last-child) {
@@ -28,7 +28,7 @@
     }
   }
   .back-btn {
-    color: $blueTextColor;
+    color: var(--blueTextColor);
     display: flex;
     align-items: center;
     background-color: transparent;

@@ -4,7 +4,7 @@ table {
     font-size: 1.4rem;
     line-height: 1.7rem;
     text-align: left;
-    color: $alternativeTextColor;
+    color: var(--alternativeTextColor);
     tr {
       th {
         padding-bottom: 2.5rem;
@@ -20,7 +20,7 @@ table {
     }
   }
   tbody {
-    color: $mainTextColor;
+    color: var(--mainTextColor);
     font-size: 1.5rem;
     line-height: 1.8rem;
     font-weight: 500;
@@ -31,7 +31,7 @@ table {
     tr {
       height: 4.5rem;
       td {
-        background-color: $tableBackgroundColor;
+        background-color: var(--tableBackgroundColor);
         line-height: 1.8rem;
         padding-right: 1rem;
         vertical-align: middle;

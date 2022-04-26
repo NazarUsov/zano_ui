@@ -1,14 +1,15 @@
-import {Component, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {TranslateService} from '@ngx-translate/core';
-import {BackendService} from './_helpers/services/backend.service';
-import {Router} from '@angular/router';
-import {VariablesService} from './_helpers/services/variables.service';
-import {ContextMenuComponent} from 'ngx-contextmenu';
-import {IntToMoneyPipe} from './_helpers/pipes/int-to-money.pipe';
-import {BigNumber} from 'bignumber.js';
-import {ModalService} from './_helpers/services/modal.service';
-import {Store} from 'store';
+import { Component, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { BackendService } from './_helpers/services/backend.service';
+import { Router } from '@angular/router';
+import { VariablesService } from './_helpers/services/variables.service';
+import { ContextMenuComponent } from 'ngx-contextmenu';
+import { IntToMoneyPipe } from './_helpers/pipes/int-to-money.pipe';
+import { BigNumber } from 'bignumber.js';
+import { ModalService } from './_helpers/services/modal.service';
+import { Store } from 'store';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
