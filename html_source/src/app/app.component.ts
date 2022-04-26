@@ -26,6 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   needOpenWallets = [];
 
+  private _destroy$: Subject<never> = new Subject<never>();
+
   @ViewChild('allContextMenu') public allContextMenu: ContextMenuComponent;
   @ViewChild('onlyCopyContextMenu') public onlyCopyContextMenu: ContextMenuComponent;
 
@@ -554,7 +556,6 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       });
 
-
       this.backend.getAppData((status, data) => {
         if (data && Object.keys(data).length > 0) {
           for (const key in data) {
@@ -574,6 +575,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.setBackendLocalization();
 
         this.backend.setLogLevel(this.variablesService.settings.appLog);
+        this.backend.setEnableTor(this.variablesService.settings.appUseTor);
 
         if (this.router.url !== '/login') {
           this.backend.haveSecureAppData((statusPass) => {
@@ -597,6 +599,12 @@ export class AppComponent implements OnInit, OnDestroy {
           });
         }
       });
+
+      /** Start listening dispatchAsyncCallResult */
+      this.backend.dispatchAsyncCallResult();
+
+      /** Start listening handleCurrentActionState */
+      this.backend.handleCurrentActionState();
     }, error => {
       console.log(error);
     });
@@ -751,6 +759,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this._destroy$.next();
     if (this.intervalUpdateContractsState) {
       clearInterval(this.intervalUpdateContractsState);
     }

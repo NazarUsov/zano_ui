@@ -8,189 +8,198 @@ import { scaleItems } from '../_helpers/data/scale-items';
 import { ScaleItems } from '../_helpers/models/scale.model';
 
 @Component({
-    selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.scss']
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-    ifSaved = false;
-    scale: string;
-    changeForm: any;
-    currentNotificationsState;
-    languagesOptions = [
-        {
-            name: 'en',
-            language: 'SETTINGS.LANGUAGE.EN'
-        },
-        {
-            name: 'fr',
-            language: 'SETTINGS.LANGUAGE.FR'
-        },
-        {
-            name: 'de',
-            language: 'SETTINGS.LANGUAGE.DE'
-        },
-        {
-            name: 'id',
-            language: 'SETTINGS.LANGUAGE.ID'
-        },
-        {
-            name: 'it',
-            language: 'SETTINGS.LANGUAGE.IT'
-        },
-        {
-            name: 'pt',
-            language: 'SETTINGS.LANGUAGE.PT'
-        }
-    ];
-    appLockOptions = [
-        {
-            id: 5,
-            name: 'SETTINGS.APP_LOCK.TIME1'
-        },
-        {
-            id: 15,
-            name: 'SETTINGS.APP_LOCK.TIME2'
-        },
-        {
-            id: 60,
-            name: 'SETTINGS.APP_LOCK.TIME3'
-        },
-        {
-            id: 0,
-            name: 'SETTINGS.APP_LOCK.TIME4'
-        }
-    ];
-    scaleItems: ScaleItems = scaleItems;
-    appLogOptions = [
-        {
-            id: -1
-        },
-        {
-            id: 0
-        },
-        {
-            id: 1
-        },
-        {
-            id: 2
-        },
-        {
-            id: 3
-        },
-        {
-            id: 4
-        }
-    ];
-    currentBuild = '';
-    appPass: any;
+  ifSaved = false;
+  scale: string;
+  appUseTor: boolean;
+  changeForm: any;
+  currentNotificationsState;
+  languagesOptions = [
+    {
+      name: 'en',
+      language: 'SETTINGS.LANGUAGE.EN'
+    },
+    {
+      name: 'fr',
+      language: 'SETTINGS.LANGUAGE.FR'
+    },
+    {
+      name: 'de',
+      language: 'SETTINGS.LANGUAGE.DE'
+    },
+    {
+      name: 'id',
+      language: 'SETTINGS.LANGUAGE.ID'
+    },
+    {
+      name: 'it',
+      language: 'SETTINGS.LANGUAGE.IT'
+    },
+    {
+      name: 'pt',
+      language: 'SETTINGS.LANGUAGE.PT'
+    }
+  ];
+  appLockOptions = [
+    {
+      id: 5,
+      name: 'SETTINGS.APP_LOCK.TIME1'
+    },
+    {
+      id: 15,
+      name: 'SETTINGS.APP_LOCK.TIME2'
+    },
+    {
+      id: 60,
+      name: 'SETTINGS.APP_LOCK.TIME3'
+    },
+    {
+      id: 0,
+      name: 'SETTINGS.APP_LOCK.TIME4'
+    }
+  ];
+  scaleItems: ScaleItems = scaleItems;
+  appLogOptions = [
+    {
+      id: -1
+    },
+    {
+      id: 0
+    },
+    {
+      id: 1
+    },
+    {
+      id: 2
+    },
+    {
+      id: 3
+    },
+    {
+      id: 4
+    }
+  ];
+  currentBuild = '';
+  appPass: any;
 
-    constructor(
-        private renderer: Renderer2,
-        public variablesService: VariablesService,
-        private backend: BackendService,
-        private location: Location,
-        public translate: TranslateService,
-        private ngZone: NgZone
-    ) {
-        this.scale = this.variablesService.settings.scale;
-        this.changeForm = new FormGroup({
-            password: new FormControl(''),
-            new_password: new FormControl('', Validators.pattern(this.variablesService.pattern)),
-            new_confirmation: new FormControl('')
-        }, [(g: FormGroup) => {
-            return g.get('new_password').value === g.get('new_confirmation').value ? null : { 'confirm_mismatch': true };
-        }, (g: FormGroup) => {
-            if (this.variablesService.appPass) {
-                return g.get('password').value === this.variablesService.appPass ? null : { 'pass_mismatch': true };
+  constructor(
+    private renderer: Renderer2,
+    public variablesService: VariablesService,
+    private backend: BackendService,
+    private location: Location,
+    public translate: TranslateService,
+    private ngZone: NgZone
+  ) {
+    this.scale = this.variablesService.settings.scale;
+    this.appUseTor = this.variablesService.settings.appUseTor;
+    this.changeForm = new FormGroup({
+      password: new FormControl(''),
+      new_password: new FormControl('', Validators.pattern(this.variablesService.pattern)),
+      new_confirmation: new FormControl('')
+    }, [(g: FormGroup) => {
+      return g.get('new_password').value === g.get('new_confirmation').value ? null : {'confirm_mismatch': true};
+    }, (g: FormGroup) => {
+      if (this.variablesService.appPass) {
+        return g.get('password').value === this.variablesService.appPass ? null : {'pass_mismatch': true};
+      }
+      return null;
+    }]);
+  }
+
+  ngOnInit() {
+    this.backend.getVersion((version, type) => {
+      this.ngZone.run(() => {
+        this.currentBuild = version;
+        this.variablesService.testnet = false;
+        if (type === 'testnet') {
+          this.currentBuild += ' TESTNET';
+          this.variablesService.testnet = true;
+        }
+        this.variablesService.networkType = type;
+      });
+    });
+    this.backend.getIsDisabledNotifications((res) => {
+      this.currentNotificationsState = res;
+    });
+  }
+
+  setScale() {
+    this.scale = this.variablesService.settings.scale;
+    this.renderer.setStyle(document.documentElement, 'font-size', this.scale);
+    this.backend.storeAppData();
+  }
+
+  onSubmitChangePass() {
+    if (this.changeForm.valid) {
+      this.onSave();
+      this.variablesService.appPass = this.changeForm.get('new_password').value;
+      if (this.variablesService.appPass) {
+        this.backend.setMasterPassword({pass: this.variablesService.appPass}, (status, data) => {
+          if (status) {
+            this.backend.storeSecureAppData({pass: this.variablesService.appPass});
+            this.variablesService.appLogin = true;
+            this.variablesService.dataIsLoaded = true;
+            if (this.variablesService.settings.appLockTime) {
+              this.variablesService.startCountdown();
             }
-            return null;
-        }]);
-    }
-
-    ngOnInit() {
-        this.backend.getVersion((version, type) => {
-            this.ngZone.run(() => {
-                this.currentBuild = version;
-                this.variablesService.testnet = false;
-                if (type === 'testnet') {
-                    this.currentBuild += ' TESTNET';
-                    this.variablesService.testnet = true;
-                }
-                this.variablesService.networkType = type;
-            });
+          } else {
+            console.log(data['error_code']);
+          }
         });
-        this.backend.getIsDisabledNotifications((res) => {
-            this.currentNotificationsState = res;
-        });
+      } else {
+        // this.backend.dropSecureAppData((status, data) => {
+        // });
+      }
+      this.changeForm.reset();
     }
+  }
 
-    setScale() {
-        this.scale = this.variablesService.settings.scale;
-        this.renderer.setStyle(document.documentElement, 'font-size', this.scale);
-        this.backend.storeAppData();
+  toggleNotifications() {
+    if (!this.currentNotificationsState) {
+      this.backend.setIsDisabledNotifications('true');
+      this.currentNotificationsState = true;
+    } else {
+      this.backend.setIsDisabledNotifications('false');
+      this.currentNotificationsState = false;
     }
+  }
 
-    onSubmitChangePass() {
-        if (this.changeForm.valid) {
-            this.onSave();
-            this.variablesService.appPass = this.changeForm.get('new_password').value;
-            if (this.variablesService.appPass) {
-                this.backend.setMasterPassword({ pass: this.variablesService.appPass }, (status, data) => {
-                    if (status) {
-                        this.backend.storeSecureAppData({ pass: this.variablesService.appPass });
-                        this.variablesService.appLogin = true;
-                        this.variablesService.dataIsLoaded = true;
-                        if (this.variablesService.settings.appLockTime) {
-                            this.variablesService.startCountdown();
-                        }
-                    } else {
-                        console.log(data['error_code']);
-                    }
-                });
-            } else {
-                // this.backend.dropSecureAppData((status, data) => {
-                // });
-            }
-            this.changeForm.reset();
-        }
-    }
+  toggleUseTor() {
+    this.appUseTor = !this.appUseTor;
+    this.variablesService.settings.appUseTor = this.appUseTor;
+    this.backend.setEnableTor(this.appUseTor);
+    this.backend.storeAppData();
+  }
 
-    toggleNotifications() {
-        if (!this.currentNotificationsState) {
-            this.backend.setIsDisabledNotifications('true');
-            this.currentNotificationsState = true;
-        } else {
-            this.backend.setIsDisabledNotifications('false');
-            this.currentNotificationsState = false;
-        }
-    }
+  onSave() {
+    this.ifSaved = true;
+    setTimeout(() => {
+      this.ifSaved = false;
+    }, 3000);
+  }
 
-    onSave() {
-        this.ifSaved = true;
-        setTimeout(() => {
-            this.ifSaved = false;
-        }, 3000);
+  onLockChange() {
+    if (this.variablesService.appLogin && this.variablesService.settings.appLockTime) {
+      this.variablesService.restartCountdown();
     }
+  }
 
-    onLockChange() {
-        if (this.variablesService.appLogin && this.variablesService.settings.appLockTime) {
-            this.variablesService.restartCountdown();
-        }
-    }
+  onLogChange() {
+    this.backend.setLogLevel(this.variablesService.settings.appLog);
+    this.backend.storeAppData();
+  }
 
-    onLogChange() {
-        this.backend.setLogLevel(this.variablesService.settings.appLog);
-        this.backend.storeAppData();
-    }
+  onLanguageChange() {
+    this.translate.use(this.variablesService.settings.language);
+    this.backend.storeAppData();
+  }
 
-    onLanguageChange() {
-        this.translate.use(this.variablesService.settings.language);
-        this.backend.storeAppData();
-    }
-
-    back() {
-        this.location.back();
-    }
+  back() {
+    this.location.back();
+  }
 
 }
