@@ -71,6 +71,7 @@ import { SyncModalComponent } from './_helpers/modals/sync-modal/sync-modal.comp
 import { ContractsTabComponent } from './contracts/contracts-tab/contracts-tab.component';
 import { SendDetailsModalComponent } from './send-details-modal/send-details-modal.component';
 import { AppComponent } from './app.component';
+import { DisablePriceFetchModule } from './_shared/directives/disable-price-fetch/disable-price-fetch.module';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -159,6 +160,7 @@ export function highchartsFactory() {
     NgSelectModule,
     ChartModule,
     PapaParseModule,
+    DisablePriceFetchModule,
     ContextMenuModule.forRoot()
   ],
   providers: [
