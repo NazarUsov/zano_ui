@@ -26,7 +26,7 @@ export class TooltipDirective implements OnDestroy {
 
   removeTooltipTimeDelay;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private route: ActivatedRoute) {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
   }
 
   @HostListener('mouseenter') onMouseEnter() {
@@ -63,9 +63,11 @@ export class TooltipDirective implements OnDestroy {
     this.removeTooltipTimeout = setTimeout(() => {
       this.renderer.setStyle(this.tooltip, 'opacity', '0');
       this.removeTooltipTimeoutInner = setTimeout(() => {
-        this.renderer.removeChild(document.body, this.tooltip);
-        this.tooltip.removeEventListener('mouseenter', this.enter);
-        this.tooltip.removeEventListener('mouseleave', this.leave);
+        if (this.renderer && this.tooltip) {
+          this.renderer.removeChild(document.body, this.tooltip);
+          this.tooltip.removeEventListener('mouseenter', this.enter);
+          this.tooltip.removeEventListener('mouseleave', this.leave);
+        }
         this.tooltip = null;
         this.onHide.emit(true);
       }, this.delay);
@@ -87,7 +89,7 @@ export class TooltipDirective implements OnDestroy {
       innerBlock = this.tooltipInner;
     }
     this.renderer.addClass(innerBlock, 'tooltip-inner');
-    this.renderer.addClass(innerBlock, 'scrolled-content');
+    this.renderer.addClass(innerBlock, '');
     this.renderer.appendChild(this.tooltip, innerBlock);
     this.renderer.appendChild(document.body, this.tooltip);
 
@@ -233,7 +235,7 @@ export class TooltipDirective implements OnDestroy {
     clearTimeout(this.removeTooltipTimeout);
     clearTimeout(this.removeTooltipTimeoutInner);
     clearTimeout(this.removeTooltipTimeDelay);
-    if (this.tooltip) {
+    if (this.tooltip && this.renderer) {
       this.renderer.removeChild(document.body, this.tooltip);
       this.tooltip = null;
     }

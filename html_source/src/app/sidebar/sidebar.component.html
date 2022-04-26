@@ -2,7 +2,7 @@
   <img src="assets/icons/logo-all.png" alt="">
 </div>
 <div class="sidebar-accounts">
-  <div class="sidebar-accounts-list scrolled-content" cdkDropList #scrollContainer cdkDropListLockAxis="y"
+  <div class="sidebar-accounts-list" cdkDropList #scrollContainer cdkDropListLockAxis="y"
     (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let wallet of variablesService.wallets">
       <div class="sidebar-account" [class.active]="wallet?.wallet_id === variablesService?.currentWallet?.wallet_id"

@@ -1,3 +1,19 @@
+app-root {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100vw;
+  min-width: 1300px;
+  height: 100vh;
+  background: #0C0C3A;
+}
+
+.app-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+}
+
 app-main,
 app-create-wallet,
 app-open-wallet,

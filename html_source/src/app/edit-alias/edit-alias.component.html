@@ -25,7 +25,7 @@
       <label for="alias-comment">
         {{ 'EDIT_ALIAS.COMMENT.LABEL' | translate }}
       </label>
-      <textarea id="alias-comment" class="scrolled-content" [(ngModel)]="alias.comment"
+      <textarea id="alias-comment" [(ngModel)]="alias.comment"
         [ngModelOptions]="{standalone: true}" [maxlength]="variablesService.maxCommentLength"
         (contextmenu)="variablesService.onContextMenu($event)"
         placeholder="{{ 'EDIT_ALIAS.COMMENT.PLACEHOLDER' | translate }}">

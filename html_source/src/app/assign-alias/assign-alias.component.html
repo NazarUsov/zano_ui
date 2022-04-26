@@ -51,7 +51,7 @@
         tooltipClass="table-tooltip assign-alias-tooltip" [delay]="50">
         {{ 'ASSIGN_ALIAS.COMMENT.LABEL' | translate }}
       </label>
-      <textarea id="alias-comment" class="scrolled-content" formControlName="comment"
+      <textarea id="alias-comment" formControlName="comment"
         placeholder="{{ 'ASSIGN_ALIAS.COMMENT.PLACEHOLDER' | translate }}"
         [maxLength]="variablesService.maxCommentLength" (contextmenu)="variablesService.onContextMenu($event)">
       </textarea>
