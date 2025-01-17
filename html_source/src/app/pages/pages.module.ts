@@ -47,6 +47,7 @@ import { BreadcrumbsComponent } from '@parts/components/breadcrumbs/breadcrumbs.
 import { BackButtonComponent } from '@parts/components/back-button/back-button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { IsVisibleControlErrorPipe } from '@parts/pipes/is-visible-control-error.pipe';
+import { RemoteNodeSettingsComponent } from './settings/components/remote-node-settings/remote-node-settings.component';
 
 @NgModule({
     declarations: [
@@ -100,6 +101,7 @@ import { IsVisibleControlErrorPipe } from '@parts/pipes/is-visible-control-error
         BackButtonComponent,
         MatIconModule,
         IsVisibleControlErrorPipe,
+        RemoteNodeSettingsComponent,
     ],
 })
 export class PagesModule {}

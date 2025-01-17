@@ -29,6 +29,7 @@ export const materialZanoIcons = [
     'zano-question',
     'zano-receive',
     'zano-regenerate',
+    'zano-redo',
     'zano-row-options',
     'zano-send',
     'zano-settings',

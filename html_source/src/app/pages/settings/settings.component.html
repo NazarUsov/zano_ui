@@ -169,6 +169,8 @@
                     </ng-container>
                 </form>
 
+                <zano-remote-node-settings></zano-remote-node-settings>
+
                 <form (ngSubmit)="onSubmitChangePass()" [formGroup]="changeForm">
                     <h4 class="master-password-title mb-2">
                         <ng-container *ngIf="!variablesService.appPass">

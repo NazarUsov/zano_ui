@@ -1,0 +1,38 @@
+<form (ngSubmit)="beforeSubmit()" [formGroup]="form">
+    <div class="form__field">
+        <label>
+            {{ 'Remote node' | translate }}
+        </label>
+        <app-switch formControlName="useRemoteNode"></app-switch>
+    </div>
+
+    <ng-container *ngIf="form.getRawValue().useRemoteNode">
+        <div class="form__card">
+            <div class="form__field form__field--secret">
+                <label
+                    for="field-secret">{{ 'Remote node address' | translate }}</label>
+                <input
+                    (contextmenu)="variablesService.onContextMenuOnlyCopy($event, form.getRawValue().address)"
+                    class="form__field--input"
+                    formControlName="address"
+                    id="field-secret"
+                    type="text"
+                />
+
+                <button (click)="copyAddress()" class="btn--copy">
+                    <mat-icon svgIcon="zano-copy"></mat-icon>
+                </button>
+
+                <button (click)="rollbackToZanoAddress()" class="btn--regenerate">
+                    <mat-icon svgIcon="zano-redo"></mat-icon>
+                </button>
+
+                <ng-container *ngIf="isAddressWasCopied">
+                    <div class="info success" style="text-align: right">
+                        {{ 'Was copied remote address' | translate }}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+</form>
