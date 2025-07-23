@@ -19,11 +19,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.15.0'
+          node-version: '22.16.0'
 
       - name: Install Dependencies
         working-directory: html_source
-        run: npm i --force
+        run: npm i
 
       - name: Build to folder html
         working-directory: html_source
