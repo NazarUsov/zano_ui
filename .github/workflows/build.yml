@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: html_source
-        run: npm i
+        run: npm i --force
 
       - name: Build to folder html
         working-directory: html_source
